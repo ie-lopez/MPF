@@ -1,6 +1,5 @@
-# MPF
-Multi-Purpose Fitting tool
-![Logo MPF](./logo.png)
+# Multi-Purpose Fitting tool
+[<img src="./logo.png" width="250"/>](./logo.png)
 
 Done for the Summer Astronomy Space Program, this is a useful notebook for cube fitting designed for JWST. For now, we used Spitzer IRS cubes.
 
