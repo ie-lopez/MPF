@@ -1,6 +1,11 @@
 name: mpf
+
+channels:
+  - conda-forge
+  - defaults
+
 dependencies:
-  - python=3.9
+  - python == 3.9
   - pip
   # Core scientific python
   - numpy
@@ -14,7 +19,6 @@ dependencies:
 
   # Jupyter Environment
   - jupyterlab
-  - notebook
 
   # Pip install
   - pip:

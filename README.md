@@ -4,9 +4,9 @@
 Done for the Summer Astronomy Space Program, this is a useful notebook for cube fitting designed for JWST. For now, we used Spitzer IRS cubes.
 
 ## Requirements
-* astropy==4.0
-* lmfit==0.9.13
-* dust-extinction==0.8
-* specutils==1.0
-* matplotlib==3.2.1
-* dill==0.3.1.1
+* astropy==5.1
+* lmfit==1.0.3 
+* dust-extinction==1.1
+* specutils==1.7
+* matplotlib==3.5.2
+* dill==0.3.5.1
