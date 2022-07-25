@@ -1,0 +1,23 @@
+name: mpf
+dependencies:
+  - python=3.8
+  - pip
+  # Core scientific python
+  - numpy
+  - scipy
+  - astropy
+  - lmfit
+  - specutils
+  - dust-extinction
+  - dill
+  
+  # Plotting
+  - matplotlib
+  - seaborn
+
+  # Jupyter Environment
+  - papermill
+  - autopep8
+  - jupyterlab
+  - notebook
+  - ipython
