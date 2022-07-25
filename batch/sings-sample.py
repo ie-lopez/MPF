@@ -275,19 +275,24 @@ def plot_fit(x, spec, specerr, model_result):
 #%%
 # Spitzer IRS (CUBISM) cube loader does not exist in specutils
 
+#Location
+data='../data/sings/'
+
 #Target 
-targname='M58'
+targname='ngc1097_DR5'
 
 #Redshift
-z=0.005060
+z=0.004218
 OneZ=1.+z
 
 #Download and open the data cubes and their uncertainties
-BoxPath="https://data.science.stsci.edu/redirect/JWST/jwst-data_analysis_tools/cube_fitting/"
-cubeSL1 = fits.open(BoxPath+targname+'_SL1_cube.fits') 
-errorsSL1 = fits.open(BoxPath+targname+'_SL1_cube_unc.fits')
-cubeSL2 = fits.open(BoxPath+targname+'_SL2_cube.fits') 
-errorsSL2 = fits.open(BoxPath+targname+'_SL2_cube_unc.fits')
+#BoxPath="https://data.science.stsci.edu/redirect/JWST/jwst-data_analysis_tools/cube_fitting/"
+cubeSL1 = fits.open(data+targname+'_SL1_cube') 
+errorsSL1 = fits.open(data+targname+'_SL1_cube_unc')
+cubeSL2 = fits.open(data+targname+'_SL2_cube') 
+errorsSL2 = fits.open(data+targname+'_SL2_cube_unc')
+
+#%%
 
 #Cube Info and Headers
 cubeSL1.info()
@@ -299,10 +304,10 @@ er_hdr2=errorsSL2[0].header
 #print(repr(hdr1))
 
 #Flux Data
-data_cube1 = cubeSL1[0].data
-error_cube1 = errorsSL1[0].data
-data_cube2 = cubeSL2[0].data
-error_cube2 = errorsSL2[0].data
+data_cube1 = cubeSL1[0].data[:,:,42:74]
+error_cube1 = errorsSL1[0].data[:,:,42:74]
+data_cube2 = cubeSL2[0].data[:,:,0:32]
+error_cube2 = errorsSL2[0].data[:,:,0:32]
 
 #Wavelength Data
 xwave1 = cubeSL1[1].data
@@ -337,20 +342,17 @@ x=np.sort(x)
 #Cube dimensions and trimming 
 xsize, ysize, zsize = data_cube.shape
 ytrim=0; ysize=ysize-ytrim
-ztrim=3; zsize=zsize-ztrim
+ztrim=0; zsize=zsize-ztrim
 print('Trimmed cube dimensions:', xsize, ysize, zsize)
 
 #Collapsed 2D image
-cube_2dflux=np.sum(data_cube,axis=0)[0:ysize,0:zsize]
+cube_2dflux=np.nansum(data_cube,axis=0)[0:ysize,0:zsize]
 
 #Collapsed 1D spectrum
-cube_1dflux=np.zeros(xsize,)
-for a in arange(0,ysize):
-    for b in arange(0,zsize):
-        spec_pix,err_pix=extract_spec(a,b)
-        cube_1dflux=cube_1dflux+spec_pix
+cube_1dflux=np.nansum(data_cube,axis=(1,2))
 
-f,(ax1,ax2)=plt.subplots(1,2, figsize=(10,5))
+f,(ax1,ax2)=plt.subplots(1,2, figsize=(11,3))
+plt.suptitle(targname,fontsize=18, y=1.1)
 ax1.set_title('log Flux (Sum over Wavelength)')
 ax1.imshow(cube_2dflux, origin='lower', cmap='gray', norm=LogNorm())
 ax2.set_title('Flux (Sum over Spaxels)')
